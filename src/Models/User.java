@@ -1,18 +1,16 @@
 package Models;
 
 public class User {
-
+    private final int encryptKey = 3;
     private int id;
     private String username;
     private String password;
-    private String mail;
 
     //Constructor
-    public User(int id, String username, String password, String mail) {
+    public User(int id, String username, String password) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.mail = mail;
     }
 
     //Getters and Setters
@@ -40,22 +38,21 @@ public class User {
         this.password = password;
     }
 
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
     //toString
+
+
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "encryptKey=" + encryptKey +
+                ", id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", mail='" + mail + '\'' +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

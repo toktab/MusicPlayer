@@ -1,3 +1,5 @@
+import Models.User;
+
 import java.util.Objects;
 
 public class UI {
@@ -34,7 +36,7 @@ public class UI {
         }
 
         if(cnt!=2){
-            System.out.println(Color.RED + "\n• ;l (USERNAME) (PASSWORD) •\n" + Color.RESET);
+            System.out.println(Color.RED + "\n• ;l / ;r (USERNAME) (PASSWORD) •\n" + Color.YELLOW_BOLD);
             return false;
         }
         return true;
@@ -50,10 +52,22 @@ public class UI {
         System.out.println("+  • Quit -> ;q                           +");
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("+  • Info -> ;i                           +");
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++" + Color.RESET);
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++" + Color.YELLOW_BOLD);
     }
 
-    static void register(){
+    static void register(String input){
+
+        if(!checkFormat(input)) return;
+
+        String username = parseUsername(input);
+        String password = parsePassword(input);
+
+        System.out.println("regUsername:"+username);
+        System.out.println("regPassword:"+password);
+
+        User user = new User(SQL.getNextId(),username,password);
+
+        SQL.addUser(user);
 
     }
 
@@ -71,7 +85,7 @@ public class UI {
 
     static void info(){
         System.out.println(Color.GREEN_BOLD);
-        System.out.println("Custom Built Music Player\n12:52AM 11/7/2022\n" + Color.RESET);
+        System.out.println("Custom Built Music Player\n12:52AM 11/7/2022\n" + Color.YELLOW_BOLD);
     }
 
 }
