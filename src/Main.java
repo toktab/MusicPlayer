@@ -1,5 +1,9 @@
+import Database.UserDao;
+import Global.Color;
+import Global.DatabaseHandler;
 import Models.User;
 
+import javax.xml.crypto.Data;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -33,5 +37,4 @@ public class Main {
             else System.out.println("Unknown Command");
         }
     }
-
 }

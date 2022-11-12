@@ -1,8 +1,10 @@
+import Database.UserDao;
+import Global.Color;
+import Global.SQL;
 import Models.User;
 
-import java.util.Objects;
-
 public class UI {
+    private static UserDao userDao = new UserDao();
 
     private static int indx = 0;
 
@@ -67,8 +69,8 @@ public class UI {
 
         User user = new User(SQL.getNextId(),username,password);
 
-        SQL.addUser(user);
-
+//        SQL.addUser(user);
+        userDao.add(user);
     }
 
     static void login(String input){

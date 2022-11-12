@@ -1,3 +1,5 @@
+package Global;
+
 import Models.User;
 
 import java.sql.*;
@@ -60,7 +62,7 @@ public class SQL {
         return users;
     }
 
-    protected static void addUser(User user) {//1, toko, 12nfdjnj4
+    public static void addUser(User user) {//1, toko, 12nfdjnj4
         Connection con = connect();
         query = "INSERT INTO music_project.user(id,username,password) VALUES (?,?,?);";
 
@@ -76,7 +78,7 @@ public class SQL {
         }
     }
 
-    protected static int getNextId() {
+    public static int getNextId() {
         Connection con = connect();
         query = "SELECT MAX(id) FROM music_project.user;";
 
