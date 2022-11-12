@@ -1,7 +1,6 @@
 package Models;
 
 public class User {
-    private final int encryptKey = 3;
     private int id;
     private String username;
     private String password;
@@ -39,13 +38,10 @@ public class User {
     }
 
     //toString
-
-
     @Override
     public String toString() {
         return "User{" +
-                "encryptKey=" + encryptKey +
-                ", id=" + id +
+                "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
