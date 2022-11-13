@@ -1,7 +1,11 @@
-import Database.UserDao;
+package UI;
+
+import Database.DAO.UserDao;
 import Global.Color;
 import Global.SQL;
-import Models.User;
+import Database.Models.User;
+
+import java.util.List;
 
 public class UI {
     private static UserDao userDao = new UserDao();
@@ -33,6 +37,7 @@ public class UI {
     private static boolean checkFormat(String input){
         int cnt = 0;
         //check if input format is correct
+        //check amount of spaces (should be 2)
         for(int i = 0; i < input.length();i++){
             if(input.charAt(i)==' ') cnt++;
         }
@@ -64,13 +69,14 @@ public class UI {
         String username = parseUsername(input);
         String password = parsePassword(input);
 
-        System.out.println("regUsername:"+username);
-        System.out.println("regPassword:"+password);
+//        System.out.println("regUsername:"+username);
+//        System.out.println("regPassword:"+password);
 
-        User user = new User(SQL.getNextId(),username,password);
+        User user = new User(getAvailableId(),username,password);
 
-//        SQL.addUser(user);
-        userDao.add(user);
+        if(!userDao.add(user)){
+            System.out.println(Color.CYAN + "Username Already Registered" + Color.YELLOW_BOLD);
+        }
     }
 
     static void login(String input){
@@ -80,14 +86,27 @@ public class UI {
         String username = parseUsername(input);
         String password = parsePassword(input);
 
-        System.out.println("Username:"+username);
-        System.out.println("Password:"+password);
+//        System.out.println("Username:"+username);
+//        System.out.println("Password:"+password);
+
+
 
     }
 
     static void info(){
         System.out.println(Color.GREEN_BOLD);
         System.out.println("Custom Built Music Player\n12:52AM 11/7/2022\n" + Color.YELLOW_BOLD);
+    }
+
+    static int getAvailableId(){//think it works pretty well :))
+        List<User> userList = userDao.getAll();
+        int indx = 1; // 2 4
+        for(int i = 0; i < userList.size(); i++){
+            if(userList.get(i).getId()==indx){
+                indx++;
+            }else break;
+        }
+        return indx;
     }
 
 }

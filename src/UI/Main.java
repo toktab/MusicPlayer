@@ -1,9 +1,7 @@
-import Database.UserDao;
-import Global.Color;
-import Global.DatabaseHandler;
-import Models.User;
+package UI;
 
-import javax.xml.crypto.Data;
+import Global.Color;
+
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -12,6 +10,7 @@ public class Main {
     final static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+
         System.out.println(Color.YELLOW_BOLD);
 
         boolean quit = false;
@@ -22,8 +21,9 @@ public class Main {
 
             System.out.print("\n:");
             input = scanner.nextLine();
-
-            if(Objects.equals(input, ";h")){//help
+            if(input.isEmpty()){
+                continue;
+            }else if(Objects.equals(input, ";h")){//help
                 UI.help();
             }else if(Objects.equals(input.substring(0,2), ";r")){//register
                 UI.register(input);

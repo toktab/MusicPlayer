@@ -1,6 +1,6 @@
-package Database;
+package Database.DAO;
 
-import Models.Music;
+import Database.Models.Music;
 
 import java.util.List;
 

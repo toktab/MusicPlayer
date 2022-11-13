@@ -1,4 +1,4 @@
-package Models;
+package Database.Models;
 
 public class Music {
 

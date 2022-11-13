@@ -1,8 +1,7 @@
-package Database;
+package Database.DAO;
 
 import Global.DatabaseHandler;
-import Global.SQL;
-import Models.User;
+import Database.Models.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -25,7 +24,8 @@ public class UserDao implements DAO<User>{
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return false;
         }
         return true;
     }
@@ -40,13 +40,9 @@ public class UserDao implements DAO<User>{
         try {
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
+            int indx = 0;
             while (resultSet.next()) {
-//                users = users + resultSet.getInt("id") + " " + resultSet.getString("username") + " " + resultSet.getString("password") + "\n";
-                user.setId(resultSet.getInt("id"));
-                user.setUsername(resultSet.getString("username"));
-                user.setPassword(resultSet.getString("password"));
-                userList.add(user);
-                user = null;
+                userList.add(new User(resultSet.getInt("id"),resultSet.getString("username"),resultSet.getString("password")));
             }
 
         } catch (SQLException e) {

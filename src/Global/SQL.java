@@ -1,6 +1,6 @@
 package Global;
 
-import Models.User;
+import Database.Models.User;
 
 import java.sql.*;
 
