@@ -6,6 +6,7 @@ import Global.SQL;
 import Database.Models.User;
 
 import java.util.List;
+import java.util.Objects;
 
 public class UI {
     private static UserDao userDao = new UserDao();
@@ -78,6 +79,16 @@ public class UI {
             System.out.println(Color.CYAN + "Username Already Registered" + Color.YELLOW_BOLD);
         }
     }
+    static User userExist(String username, String password){
+        List<User> userList = userDao.getAll();
+
+        for(int i = 0; i < userList.size(); i++){
+            if(Objects.equals(userList.get(i).getUsername(), username) && Objects.equals(userList.get(i).getPassword(), password.hashCode() + "")){
+                return userList.get(i);
+            }
+        }
+        return null;
+    }
 
     static void login(String input){
 
@@ -86,11 +97,19 @@ public class UI {
         String username = parseUsername(input);
         String password = parsePassword(input);
 
-//        System.out.println("Username:"+username);
-//        System.out.println("Password:"+password);
+        User user = userExist(username,password);
 
+        if(user==null){
+            System.out.println(Color.RED_BOLD + "Wrong Credentials\n" + Color.YELLOW_BOLD);
+            return;
+        }
 
+        //todo Login System
 
+        System.out.println("Logged In");
+        //aq after login iwyeeba wesit
+
+        //
     }
 
     static void info(){
