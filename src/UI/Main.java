@@ -1,7 +1,14 @@
 package UI;
 
+import Database.DAO.IsFriendOfDao;
+import Database.DAO.UserDao;
+import Database.Models.IsFriendOf;
+import Database.Models.User;
 import Global.Color;
+import Service.IsFriendOfService;
+import Service.UserService;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -9,7 +16,15 @@ public class Main {
 
     final static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {//delete problem
+        //todo add after login
+
+
+//        UserService userService = new UserService(new UserDao());
+//        User user = userService.getUserById(1);
+//        IsFriendOfService isFriendOfService = new IsFriendOfService(new IsFriendOfDao(),new UserDao());
+//        System.out.println(isFriendOfService.getFriendsByUser(user));
+
 
         System.out.println(Color.YELLOW_BOLD);
 
