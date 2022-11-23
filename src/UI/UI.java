@@ -106,7 +106,8 @@ public class UI {
 
         //todo Login System
 
-        System.out.println("Logged In");
+        System.out.println("Logged In as: " + user.getUsername());
+        HomeUI.home(user);
         //aq after login iwyeeba wesit
 
         //
