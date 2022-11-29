@@ -1,0 +1,234 @@
+package UI;
+
+import Database.DAO.MusicDao;
+import Database.DAO.UserDao;
+import Database.Models.Music;
+import Global.Color;
+import Global.*;
+import Database.Models.User;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
+
+import java.io.*;
+import java.util.List;
+import java.util.Objects;
+
+public class UI {
+    private static UserDao userDao = new UserDao();
+
+    private static int indx = 0;
+
+    private static String parseUsername(String input){
+        String username = "";
+        for(int i = 3; i < input.length(); i++){
+            if(input.charAt(i)==' '){
+                indx = i + 1;
+                break;
+
+            }else username = username + input.charAt(i);
+        }
+        return username;
+    }
+
+    private static String parsePassword(String input){
+        String password = "";
+        for(int i = indx; i < input.length(); i++){
+            if(input.charAt(i)==' '){
+
+            }else password = password + input.charAt(i);
+        }
+        return password;
+    }
+
+    private static boolean checkFormat(String input){
+        int cnt = 0;
+        //check if input format is correct
+        //check amount of spaces (should be 2)
+        for(int i = 0; i < input.length();i++){
+            if(input.charAt(i)==' ') cnt++;
+        }
+
+        if(cnt!=2){
+            System.out.println(Color.RED + "\n• ;l / ;r (USERNAME) (PASSWORD) •\n" + Color.YELLOW_BOLD);
+            return false;
+        }
+        return true;
+    }
+
+    static void help(){
+        System.out.print(Color.CYAN_BOLD);
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("+  • Register -> ;r (USERNAME) (PASSWORD) +");
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("+  • Login -> ;l (USERNAME) (PASSWORD)    +");
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("+  • Quit -> ;q                           +");
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("+  • Info -> ;i                           +");
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++" + Color.YELLOW_BOLD);
+    }
+
+    static void register(String input){
+
+        if(!checkFormat(input)) return;
+
+        String username = parseUsername(input);
+        String password = parsePassword(input);
+
+//        System.out.println("regUsername:"+username);
+//        System.out.println("regPassword:"+password);
+
+        User user = new User(getAvailableId(),username,password);
+
+        if(!userDao.add(user)){
+            System.out.println(Color.CYAN + "Username Already Registered" + Color.YELLOW_BOLD);
+        }
+        login(";l "+getlogin().getUsername()+" "+getlogin().getPassword());
+    }
+    static User userExist(String username, String password){
+        List<User> userList = userDao.getAll();
+
+        for(int i = 0; i < userList.size(); i++){
+            if(Objects.equals(userList.get(i).getUsername(), username) && Objects.equals(userList.get(i).getPassword(), password.hashCode() + "")){
+                return userList.get(i);
+            }
+        }
+        return null;
+    }
+
+    static void logout(){
+        try{
+            FileWriter fi=new FileWriter("C:\\Users\\Administrator\\Desktop\\MusicPlayer-toko(12)\\logged in.txt");
+            BufferedWriter outt=new BufferedWriter(fi);
+            outt.write("");//shlis rac adre ewera
+            outt.close();
+            fi.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println(Color.RED_BOLD+"LOGGED OUT"+Color.YELLOW_BOLD);
+    }
+
+    static User getlogin() {
+        String a = null;
+        String id = "";
+        int idint = 0, passint = 0, b = 0;
+        String pass = "";
+        try {
+            FileReader fi = new FileReader("C:\\Users\\Administrator\\Desktop\\MusicPlayer-toko(12)\\logged in.txt");
+            BufferedReader inn = new BufferedReader(fi);
+            a = inn.readLine();
+            inn.close();
+            fi.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(a==null){
+            return null;
+        }
+        for (int i = 0; i < a.length(); i++) {
+            if (a.charAt(i) == ' ') {
+                b = i + 1;
+                i = a.length() + 1;
+                break;
+            } else {
+                id = id + a.charAt(i);
+            }
+        }
+        for (int i = b; i < a.length(); i++) {
+            pass = pass + a.charAt(i);
+        }
+
+        List<User> userList = userDao.getAll();
+        User THEUSER = new User(0, "", "");
+        Boolean l = false;
+        for (int i = 0; i < userList.size(); i++) {
+            if ((Objects.equals(userList.get(i).getId(), Integer.parseInt(id))) && (Objects.equals(userList.get(i).getPassword(), pass))) {
+                THEUSER = userList.get(i);
+                l = true;
+                i = userList.size();
+            }
+        }
+        if (l) {
+            return THEUSER;
+        }
+        else{
+            return null;
+        }
+    }
+
+    static boolean login(String input){
+
+        if(!checkFormat(input)) return false;
+
+        String username = parseUsername(input);
+        String password = parsePassword(input);
+
+        User user = userExist(username,password);
+
+        User user1 =new User(0,"","");
+        List<User> userList = userDao.getAll();
+        for(int i = 0; i < userList.size(); i++){
+            if(Objects.equals(userList.get(i).getUsername(), username) && Objects.equals(userList.get(i).getPassword(), password.hashCode() + "")){
+                user1=userList.get(i);
+            }
+        }
+        if(user==null){
+            System.out.println(Color.RED_BOLD + "Wrong Credentials\n" + Color.YELLOW_BOLD);
+            return false;
+        }
+
+        //todo Login System
+
+        System.out.println("Logged In as : "+username);
+        //aq after login iwyeeba wesit
+
+        try{
+            FileWriter fi=new FileWriter("C:\\Users\\Administrator\\Desktop\\MusicPlayer-toko(12)\\logged in.txt");
+            BufferedWriter outt=new BufferedWriter(fi);
+            outt.write(user1.getId()+" "+password.hashCode());//roca musikis gamoqveyneba dagvwirdeba daloginebuli unda iyos
+            outt.close();
+            fi.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+return true;
+    }
+
+    static void Play(String input,String [] args)throws Exception{
+        //todo the player itself
+        Mp3Player.main(args);
+
+    }
+
+    static void info(){
+        System.out.println(Color.GREEN_BOLD);
+        System.out.println("Custom Built Music Player\n12:52AM 11/7/2022\n" + Color.YELLOW_BOLD);
+    }
+
+    static int getAvailableId(){//think it works pretty well :)) no kys
+        List<User> userList = userDao.getAll();
+        int indx = 1; // 2 4
+        for(int i = 0; i < userList.size(); i++){
+            if(userList.get(i).getId()==indx){
+                indx++;
+            }else break;
+        }
+        return indx;
+    }
+    static int getAvailableMusicId(){//ctrl c + V
+        MusicDao a=new MusicDao();
+        List<Music> musicList = a.getAll();
+        int indx = 1;
+        for(int i = 0; i < musicList.size(); i++){
+            if(musicList.get(i).getId()==indx){
+                indx++;
+            }else break;
+        }
+        return indx;
+    }
+
+}
