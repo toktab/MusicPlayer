@@ -27,7 +27,7 @@ public class Server {
             Socket newUser = serverSocket.accept();
             socketList.add(newUser);
 
-            new SendInfo(socketList.get(socketList.size() - 1), socketList).start();
+//            new SendInfo(socketList.get(socketList.size() - 1), socketList).start();
         }
 
     }

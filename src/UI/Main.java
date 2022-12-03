@@ -20,6 +20,7 @@ public class Main {
         //todo add after login
 
 
+
 //        UserService userService = new UserService(new UserDao());
 //        User user = userService.getUserById(1);
 //        IsFriendOfService isFriendOfService = new IsFriendOfService(new IsFriendOfDao(),new UserDao());

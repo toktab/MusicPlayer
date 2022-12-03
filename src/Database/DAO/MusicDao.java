@@ -15,12 +15,12 @@ public class MusicDao implements DAO<Music>{
 
     @Override
     public boolean add(Music item) {//returns true if added successfully
-        query = "INSERT INTO music_project.music(id,path) VALUES (?,?);";
+        query = "INSERT INTO music_project.music(id,name) VALUES (?,?);";
 
         try {
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setInt(1, item.getId());
-            preparedStatement.setString(2,item.getPath());
+            preparedStatement.setString(2,item.getName());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -41,7 +41,7 @@ public class MusicDao implements DAO<Music>{
             ResultSet resultSet = statement.executeQuery(query);
             int indx = 0;
             while (resultSet.next()) {
-                musicList.add(new Music(resultSet.getInt("id"),resultSet.getString("path")));
+                musicList.add(new Music(resultSet.getInt("id"),resultSet.getString("name")));
             }
 
         } catch (SQLException e) {
@@ -52,11 +52,11 @@ public class MusicDao implements DAO<Music>{
 
     @Override
     public boolean update(Music item) {//ups the date
-        query = "UPDATE music_project.music SET path = ?  WHERE id = ? ;";
+        query = "UPDATE music_project.music SET name = ?  WHERE id = ? ;";
 
         try {
             PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setString(1,item.getPath());
+            preparedStatement.setString(1,item.getName());
             preparedStatement.setInt(2,item.getId());
 
             preparedStatement.executeUpdate();

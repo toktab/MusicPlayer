@@ -3,15 +3,15 @@ package Database.Models;
 public class Music {
 
     private int id;
-    private String path;
+    private String name;
 
     //Constructor
-    public Music(int id, String path) {
+
+    public Music(int id, String name) {
         this.id = id;
-        this.path = path;
+        this.name = name;
     }
 
-    //Getters and Setters
     public int getId() {
         return id;
     }
@@ -20,19 +20,12 @@ public class Music {
         this.id = id;
     }
 
-    public String getPath() {
-        return path;
+    public String getName() {
+        return name;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setName(String name) {
+        this.name = name;
     }
-    //toString
-    @Override
-    public String toString() {
-        return "Music{" +
-                "id=" + id +
-                ", path='" + path + '\'' +
-                '}';
-    }
+
 }

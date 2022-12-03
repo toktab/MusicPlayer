@@ -43,49 +43,20 @@ public class HomeUI {
 
     static void helpHome(){
         System.out.print(Color.CYAN_BOLD);
-        System.out.println("+++++++++++++++++++++++++++++++++++");
-        System.out.println("  • Play -> ;p (MUSIC_ID)         +");
-        System.out.println("  • Friends -> ;f                 +");
-        System.out.println("  • Check Available Music -> ;c   +");
-        System.out.println("  • My Music -> ;m                +");
-        System.out.println("  • Add Music -> ;a (MUSIC_ID)    +");
-        System.out.println("  • Delete Music -> ;d (MUSIC_ID) +");
-        System.out.println("  • Exit account -> ;e            +");
-        System.out.println("  • Quit -> ;q                    +");
-        System.out.println("+++++++++++++++++++++++++++++++++++" + Color.YELLOW_BOLD);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("  • Play Music -> ;m -play (MUSIC_ID)        +");
+        System.out.println("  • Stop Music -> ;m -stop                   +");
+        System.out.println("  • Find currently played Music -> ;m        +");
+        System.out.println("  • Friends -> ;f -all                       +");
+        System.out.println("  • Check Friends status -> ;f -status       +");
+        //                                              ;f (name) -status
+        System.out.println("  • Add new Friend -> ;f (USERNAME)          +");
+        System.out.println("  • Remove Friend -> ;f -remove (USERNAME)   +");
+        System.out.println("  • Exit account -> ;e                       +");
+        System.out.println("  • Quit -> ;q                               +");
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++" + Color.YELLOW_BOLD);
     }
 
-
-
-    static void playMusic(String input){
-
-        if(!checkFormat(input)) return;
-
-        //
-        int id = parsePlayMusic(input);
-
-        System.out.println(id);
-
-        //
-        play("src/Music/Recording (2).wav");
-        //
-
-    }
-    static void play(String path){
-        try{
-            String filename = path;
-            URL url = HomeUI.class.getResource(filename);
-            AudioInputStream ais = AudioSystem.getAudioInputStream(url);
-            DataLine.Info info = new DataLine.Info(Clip.class, ais.getFormat());
-            Clip clip = (Clip) AudioSystem.getLine(info);
-            clip.open(ais);
-            clip.start();
-            Thread.sleep(6000); // plays up to 6 seconds of sound before exiting
-            clip.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
 
     static void home(User user){
 
@@ -103,23 +74,11 @@ public class HomeUI {
             else if(Objects.equals(input, ";h")){//help
                 helpHome();
             }
-            else if(Objects.equals(input.substring(0,2), ";p")){//play
-                playMusic(input);
+            else if(Objects.equals(input.substring(0,2), ";m")){//play # stop
+                HomeCommands.music(input);
             }
-            else if(Objects.equals(input, ";f")){//friends
-                helpHome();
-            }
-            else if(Objects.equals(input, ";c")){//check music
-                helpHome();
-            }
-            else if(Objects.equals(input, ";m")){//my music
-                helpHome();
-            }
-            else if(Objects.equals(input.substring(0,2), ";a")){//add music
-                helpHome();
-            }
-            else if(Objects.equals(input.substring(0,2), ";d")){//delete music
-                helpHome();
+            else if(Objects.equals(input.substring(0,2), ";f")){//check music
+                HomeCommands.friend(input);
             }
             else if(Objects.equals(input, ";e")){//exit account
                 helpHome();
