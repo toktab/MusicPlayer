@@ -28,4 +28,11 @@ public class Music {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "Music{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

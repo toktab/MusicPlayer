@@ -2,9 +2,14 @@ package UI;
 
 import Database.DAO.MusicDao;
 import Database.Models.Music;
+import Database.Models.User;
 import Global.Color;
+import Network.Client.Client;
+import Network.Server.ThreadServer;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class HomeCommands {
@@ -33,7 +38,7 @@ public class HomeCommands {
         return false;
     }
 
-    public static void music(String input) {
+    public static void music(String input, User user) {
 
         if (countSpace(input) > 2 || input.equals("")) {
             System.out.println(Color.RED + "\n• Syntax Error •\n" + Color.YELLOW_BOLD);
@@ -44,7 +49,22 @@ public class HomeCommands {
 
         if (input.equals(";m")) {
             //current music
+
         } else if (input.equals(";m -stop")) {
+            HashMap<User, Music> info = ThreadServer.info;
+            int musicId = -1;//HOW TF DO I GET VALUE BY KEY IN HASHMAP!!!
+            for(Map.Entry<User, Music> entry : info.entrySet()) {//todo BUGGGGGG HEREEE
+                System.out.println(entry.getKey().getId());
+                System.out.println("\n" + user.getId());
+//                if(entry.getKey().getId()==(user.getId())) {
+//                    System.out.println(entry.getValue().getId());
+//                    musicId=entry.getValue().getId();
+//                }
+            }
+            System.out.println("MUSICID KEYY : " + musicId);
+            Client client = new Client(user);
+            client.updateCurrentMusic(musicId, user.getId(),false);
+
             //stop music
         } else if (countSpace(input) == 2 && input.substring(0, 8).equals(";m -play")) {
             int musicId = Integer.parseInt((input.substring(9, input.length())));
@@ -52,17 +72,52 @@ public class HomeCommands {
             if (!(checkMusic(musicId))) {
                 System.out.println(Color.RED + "\n• Wrong Music ID •\n" + Color.YELLOW_BOLD);
             }
+
+            Client client = new Client(user);
+            client.updateCurrentMusic(musicId, user.getId(),true);
+            MusicDao musicDao = new MusicDao();
+            List<Music> musicList = musicDao.getAll();
+            Music currentMusic = new Music(-1,null);
+            for(int i = 0 ; i < musicList.size(); i++){
+                if(musicList.get(i).getId()==musicId){
+                    currentMusic = musicList.get(i);
+                    break;
+                }
+            }
+            System.out.println("You are Currently listening to:");
+            System.out.println(currentMusic.getName());
             //
 
         } else if (countSpace(input) == 2 && input.substring(0, 7).equals(";m -add")) {
-            int musicId = Integer.parseInt((input.substring(8, input.length())));
-            System.out.println(musicId);
-
+            String musicName = (input.substring(8, input.length()));
+            System.out.println();
+            MusicDao musicDao = new MusicDao();
+            List<Music> musicList = musicDao.getAll();
+            for(int i = 0 ; i < musicList.size(); i++){
+                if(Objects.equals(musicList.get(i).getName(), musicName)){
+                    System.out.println("Music Already exists!");
+                    return;
+                }
+            }
+            musicDao.add(new Music(getAvailableId(),musicName));
+            System.out.println("Successfully added new Music!");
             //
         }
     }
 
-    public static void friend(String input) {
+    static int getAvailableId(){//think it works pretty well :))
+        MusicDao musicDao = new MusicDao();
+        List<Music> musicList = musicDao.getAll();
+        int indx = 1; // 2 4
+        for(int i = 0; i < musicList.size(); i++){
+            if(musicList.get(i).getId()==indx){
+                indx++;
+            }else break;
+        }
+        return indx;
+    }
+
+    public static void friend(String input, User user) {
 
         if (countSpace(input) > 2 || input.equals("")) {
             System.out.println(Color.RED + "\n• Syntax Error •\n" + Color.YELLOW_BOLD);

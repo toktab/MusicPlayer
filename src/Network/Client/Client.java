@@ -3,6 +3,7 @@ package Network.Client;
 import Database.Models.User;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Client {
@@ -26,5 +27,13 @@ public class Client {
         threadClient.start();
     }
 
+    public void updateCurrentMusic(int id,int userId,boolean listening){
+        new Thread(() -> {
+            ThreadClient threadClient = new ThreadClient(this.s,user);
+            threadClient.sendToServer(id,userId,listening);
+        }).start();
+
+
+    }
 
 }

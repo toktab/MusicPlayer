@@ -2,10 +2,12 @@ package Network.Server;
 
 import Database.Models.User;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Server {
     public static void main(String[] args) throws Exception {
@@ -21,6 +23,16 @@ public class Server {
                 clients.add(socket);
                 ThreadServer ThreadServer = new ThreadServer(socket, clients, SocketUserList);
                 ThreadServer.start();
+
+                new Thread(() -> {
+                    Scanner in = null;
+                    try {
+                        in = new Scanner(socket.getInputStream());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println("Received:" + in.nextLine());
+                }).start();
             }
 
         } catch (Exception e) {
