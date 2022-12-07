@@ -2,6 +2,7 @@ package UI;
 
 import Database.Models.User;
 import Global.Color;
+import Network.Client.Client;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -46,6 +47,7 @@ public class HomeUI {
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("  • Play Music -> ;m -play (MUSIC_ID)        +");
         System.out.println("  • Stop Music -> ;m -stop                   +");
+        System.out.println("  • Add new Music -> ;m -add (MUSIC_NAME)    +");
         System.out.println("  • Find currently played Music -> ;m        +");
         System.out.println("  • Friends -> ;f -all                       +");
         System.out.println("  • Check Friends status -> ;f -status       +");
@@ -64,6 +66,13 @@ public class HomeUI {
         String input = null;
         System.out.println(Color.YELLOW + "\n For more help -> ;h" + Color.YELLOW_BOLD);
 
+        Client client = new Client(user);
+        try {
+            client.connect();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         while (!quit) {//p 1
 
             System.out.print("\n:");
@@ -71,10 +80,13 @@ public class HomeUI {
             if(input.isEmpty()){
                 continue;
             }
+            else if(input.charAt(0)!=';'){
+                System.out.println("Unknown Command");
+            }
             else if(Objects.equals(input, ";h")){//help
                 helpHome();
             }
-            else if(Objects.equals(input.substring(0,2), ";m")){//play # stop
+            else if(Objects.equals(input.substring(0,2), ";m")){//play # stop # music
                 HomeCommands.music(input);
             }
             else if(Objects.equals(input.substring(0,2), ";f")){//check music

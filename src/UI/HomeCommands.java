@@ -35,28 +35,54 @@ public class HomeCommands {
 
     public static void music(String input) {
 
-        if(countSpace(input)>2|| input.equals("")){
+        if (countSpace(input) > 2 || input.equals("")) {
             System.out.println(Color.RED + "\n• Syntax Error •\n" + Color.YELLOW_BOLD);
             return;
         }
 
         // ;m -play 123
 
-        if(input.equals(";m")){
+        if (input.equals(";m")) {
             //current music
-        }else if(input.equals(";m -stop")){
+        } else if (input.equals(";m -stop")) {
             //stop music
-        }else if(countSpace(input)==2 && input.substring(0,8).equals(";m -play")){
-            int musicId = Integer.parseInt((input.substring(9,input.length())));
+        } else if (countSpace(input) == 2 && input.substring(0, 8).equals(";m -play")) {
+            int musicId = Integer.parseInt((input.substring(9, input.length())));
 
-            if(!(checkMusic(musicId))){
+            if (!(checkMusic(musicId))) {
                 System.out.println(Color.RED + "\n• Wrong Music ID •\n" + Color.YELLOW_BOLD);
             }
+            //
 
+        } else if (countSpace(input) == 2 && input.substring(0, 7).equals(";m -add")) {
+            int musicId = Integer.parseInt((input.substring(8, input.length())));
+            System.out.println(musicId);
+
+            //
         }
-
     }
 
     public static void friend(String input) {
+
+        if (countSpace(input) > 2 || input.equals("")) {
+            System.out.println(Color.RED + "\n• Syntax Error •\n" + Color.YELLOW_BOLD);
+            return;
+        } else if (input.equals(";f")) {
+            //check currently online friends
+
+        } else if (input.equals(";f -all")) {
+            //check all friends
+        } else if (input.equals(";f -status")) {
+            //check what online friends are listening to
+        } else if (countSpace(input) == 1 && input.substring(0, 2).equals(";f")) {
+            System.out.println("add f");
+            String usernameToAdd = input.substring(3, input.length());
+            System.out.println(usernameToAdd);
+        } else if (countSpace(input) == 2 && input.substring(0, 10).equals(";f -remove")) {
+            System.out.println("remove f");
+            String usernameToRemove = input.substring(11, input.length());
+            System.out.println(usernameToRemove);
+        }
+
     }
 }

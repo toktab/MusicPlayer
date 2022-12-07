@@ -1,14 +1,7 @@
 package UI;
 
-import Database.DAO.IsFriendOfDao;
-import Database.DAO.UserDao;
-import Database.Models.IsFriendOf;
-import Database.Models.User;
 import Global.Color;
-import Service.IsFriendOfService;
-import Service.UserService;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -18,6 +11,13 @@ public class Main {
 
     public static void main(String[] args) {//delete problem
         //todo add after login
+
+//        ThreadServer threadServer = new ThreadServer();
+//        ThreadClient threadClient = new ThreadClient();
+//        ThreadClient threadClient1 = new ThreadClient();
+//        threadServer.start();
+//        threadClient.start();
+//        threadClient1.start();
 
 
 
