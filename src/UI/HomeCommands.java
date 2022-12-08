@@ -50,20 +50,42 @@ public class HomeCommands {
         if (input.equals(";m")) {
             //current music
 
-        } else if (input.equals(";m -stop")) {
-            HashMap<User, Music> info = ThreadServer.info;
-            int musicId = -1;//HOW TF DO I GET VALUE BY KEY IN HASHMAP!!!
-            for(Map.Entry<User, Music> entry : info.entrySet()) {//todo BUGGGGGG HEREEE
-                System.out.println(entry.getKey().getId());
-                System.out.println("\n" + user.getId());
-//                if(entry.getKey().getId()==(user.getId())) {
-//                    System.out.println(entry.getValue().getId());
-//                    musicId=entry.getValue().getId();
-//                }
-            }
-            System.out.println("MUSICID KEYY : " + musicId);
+        } else if (input.substring(0, 8).equals(";m -stop")) {
+
+//            int musicId = Integer.parseInt((input.substring(9, input.length())));
+
+//            if (!(checkMusic(musicId))) {
+//                System.out.println(Color.RED + "\n• Wrong Music ID •\n" + Color.YELLOW_BOLD);
+//            }
+
             Client client = new Client(user);
-            client.updateCurrentMusic(musicId, user.getId(),false);
+            client.updateCurrentMusic(-1, user.getId(),false);
+            MusicDao musicDao = new MusicDao();
+            List<Music> musicList = musicDao.getAll();
+            Music currentMusic = new Music(-1,null);
+            for(int i = 0 ; i < musicList.size(); i++){
+                if(musicList.get(i).getId()==-1){
+                    currentMusic = musicList.get(i);
+                    break;
+                }
+            }
+            System.out.println(Color.CYAN_BOLD + "Your Activity Has been cleared!" + Color.YELLOW_BOLD);
+//            Client client = new Client(user);
+//            client.updateCurrentMusic(musicId, user.getId(),false);
+
+//            HashMap<User, Music> info = ThreadServer.getInfo();
+//            HashMap<Integer,Integer> hash = ThreadServer.getActivity();
+//            User currentUser = new User(-1,null,null);
+//            Music currentMusic = new Music(-1,null);
+//            for(User u : info.keySet()){
+//                currentUser = u;
+//                currentMusic = info.get(u);
+//                System.out.println("Current User: " + currentUser.getId());
+//                System.out.println("Current Music: " + currentMusic.getId());
+//                System.out.println();
+//            }
+//            Client client = new Client(user);
+//            client.updateCurrentMusic(musicId, user.getId(),false);
 
             //stop music
         } else if (countSpace(input) == 2 && input.substring(0, 8).equals(";m -play")) {

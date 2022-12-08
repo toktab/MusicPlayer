@@ -88,9 +88,11 @@ public class HomeUI {
             }
             else if(Objects.equals(input.substring(0,2), ";m")){//play # stop # music
                 HomeCommands.music(input,user);
+                continue;
             }
             else if(Objects.equals(input.substring(0,2), ";f")){//check music
                 HomeCommands.friend(input,user);
+                continue;
             }
             else if(Objects.equals(input, ";e")){//exit account
                 helpHome();
