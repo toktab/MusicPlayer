@@ -54,6 +54,7 @@ public class HomeCommands {
         if (input.equals(";m")) {
             //current music
 
+
         } else if (input.substring(0, 8).equals(";m -stop")) {
 
 //            int musicId = Integer.parseInt((input.substring(9, input.length())));
@@ -152,6 +153,10 @@ public class HomeCommands {
             //check currently online friends
 
         } else if (input.equals(";f -all")) {
+            Client client = new Client(user);
+            HashMap<Integer, Integer> activity = client.getActivity();
+            System.out.println("activity");
+            System.out.println(activity);
             //check all friends
         } else if (input.equals(";f -status")) {
             //check what online friends are listening to

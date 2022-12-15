@@ -1,10 +1,13 @@
 package Network.Client;
 
 import Database.Models.User;
+import Network.Server.Server;
+import Network.Server.ThreadServer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.HashMap;
 
 public class Client {
 
@@ -34,6 +37,13 @@ public class Client {
         }).start();
 
 
+    }
+    public HashMap<Integer, Integer> getActivity(){
+        HashMap<Integer,Integer> ac = new HashMap<>();
+        Server server = new Server();
+        server.sendActivity();
+        ThreadClient threadClient = new ThreadClient(this.s,user);
+        return threadClient.getCurrentActivity();
     }
 
 }

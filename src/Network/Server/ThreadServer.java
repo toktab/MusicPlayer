@@ -2,10 +2,9 @@ package Network.Server;
 
 import Database.Models.Music;
 import Database.Models.User;
+import Network.Info;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
@@ -41,6 +40,19 @@ public class ThreadServer extends Thread {
         this.socket = socket;
         this.clients = clients;
         this.socketClientList = socketClientList;
+    }
+
+    public static void sendActivity(Socket s) {
+        HashMap<Integer,Integer> activity = new HashMap<>();
+        try {
+//            Info information = new Info(activity);
+            OutputStream outputStream = s.getOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+//            objectOutputStream.writeObject(information);
+            objectOutputStream.write(1);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void run() {

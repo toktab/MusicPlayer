@@ -80,4 +80,20 @@ public class MusicDao implements DAO<Music>{
         }
         return true;
     }
+    public String getMusicNameById(int id){
+        query = "  SELECT name FROM music_project.music\n" +
+                "  WHERE id = " + id + ";";
+        String name = null;
+        try {
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                name = resultSet.getString("id");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return name;
+    }
 }
