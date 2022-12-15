@@ -70,7 +70,8 @@ public class HomeUI {
         try {
             client.connect();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+//            throw new RuntimeException(e);
+            System.out.println("Couldn't connect to server");
         }
 
         while (!quit) {//p 1
@@ -83,6 +84,7 @@ public class HomeUI {
             else if(input.charAt(0)!=';'){
                 System.out.println("Unknown Command");
             }
+            else if(input.equals(";")) System.out.println("Unknown Command");
             else if(Objects.equals(input, ";h")){//help
                 helpHome();
             }

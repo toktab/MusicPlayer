@@ -1,11 +1,15 @@
 package UI;
 
+import Database.DAO.IsFriendOfDao;
 import Database.DAO.MusicDao;
+import Database.DAO.UserDao;
 import Database.Models.Music;
 import Database.Models.User;
 import Global.Color;
 import Network.Client.Client;
 import Network.Server.ThreadServer;
+import Service.IsFriendOfService;
+import Service.UserService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -151,15 +155,30 @@ public class HomeCommands {
             //check all friends
         } else if (input.equals(";f -status")) {
             //check what online friends are listening to
-        } else if (countSpace(input) == 1 && input.substring(0, 2).equals(";f")) {
+        } else if (countSpace(input) == 2 && input.substring(0, 7).equals(";f -add")) {
             System.out.println("add f");
-            String usernameToAdd = input.substring(3, input.length());
+            String usernameToAdd = input.substring(8, input.length());
             System.out.println(usernameToAdd);
+            addFriend(usernameToAdd,user);
+
         } else if (countSpace(input) == 2 && input.substring(0, 10).equals(";f -remove")) {
             System.out.println("remove f");
             String usernameToRemove = input.substring(11, input.length());
             System.out.println(usernameToRemove);
+            removeFriend(usernameToRemove,user);
         }
 
+    }
+    private static void addFriend(String usernameToAdd, User user){
+        UserService userService = new UserService(new UserDao());
+        var isFriendOfService = new IsFriendOfService(new IsFriendOfDao(),new UserDao());
+        List<User> friends = isFriendOfService.getFriendsByUser(user);
+        isFriendOfService.addFriend(user,usernameToAdd);
+    }
+    public static void removeFriend(String usernameToRemove, User user){
+        UserService userService = new UserService(new UserDao());
+        var isFriendOfService = new IsFriendOfService(new IsFriendOfDao(),new UserDao());
+        List<User> friends = isFriendOfService.getFriendsByUser(user);
+        isFriendOfService.removeFriend(user,usernameToRemove);
     }
 }
