@@ -33,7 +33,7 @@ public class Client {
     public void updateCurrentMusic(int id,int userId,boolean listening){
         new Thread(() -> {
             ThreadClient threadClient = new ThreadClient(this.s,user);
-            threadClient.sendToServer(id,userId,listening);
+            threadClient.sendActivityToServer(id,userId,listening);
         }).start();
 
 

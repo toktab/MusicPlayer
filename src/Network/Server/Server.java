@@ -13,6 +13,7 @@ public class Server {
     private static Socket socket;
     public static void main(String[] args) throws Exception {
 
+        HashMap<Integer,Integer> activity = new HashMap<>();
         ArrayList<Socket> clients = new ArrayList<>();
         HashMap<Socket, User> SocketUserList = new HashMap<Socket, User>();
 //
@@ -22,7 +23,8 @@ public class Server {
             while (true) {
                 socket = serversocket.accept();
                 clients.add(socket);
-                ThreadServer ThreadServer = new ThreadServer(socket, clients, SocketUserList);
+
+                ThreadServer ThreadServer = new ThreadServer(socket, clients, SocketUserList,activity);
                 ThreadServer.start();
 
 //                new Thread(() -> {

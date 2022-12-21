@@ -69,7 +69,7 @@ public class ThreadClient extends Thread{
 //            throw new RuntimeException(e);
 //        }
 
-    public void sendToServer(int id, int userId,boolean listening){
+    public void sendActivityToServer(int id, int userId,boolean listening){
         if(listening) {//LISTENING
             try {
                 PrintWriter printWriter = new PrintWriter(s.getOutputStream(), true);
@@ -90,6 +90,30 @@ public class ThreadClient extends Thread{
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+    public void sendRequestForActivity(){
+        try {
+
+            PrintWriter printWriter = new PrintWriter(s.getOutputStream(), true);
+            printWriter.println("!");
+            System.out.println("Sent ! - client");
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void sendRequestForActivityForFriend(int friendId){
+        try {
+
+            PrintWriter printWriter = new PrintWriter(s.getOutputStream(), true);
+            printWriter.println("!" + friendId);
+            System.out.println("Sent friendID ! - client");
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
         }
     }
 

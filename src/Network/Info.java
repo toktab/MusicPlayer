@@ -1,17 +1,19 @@
 package Network;
 
+import Global.Pair;
+
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.HashMap;
 
-public class Info{
-    HashMap<Integer,Integer> act = new HashMap<>();
-
-    Socket socket = new Socket();
+public class Info implements Serializable {
+    HashMap<Integer,Integer> act = null;
+    Pair<Integer, Integer> pair = null;
 
     public Info(HashMap<Integer, Integer> act) {
         this.act = act;
     }
-    public Info(Socket socket) {
-        this.socket = socket;
+    public Info(Pair<Integer,Integer> pair){
+        this.pair = pair;
     }
 }
